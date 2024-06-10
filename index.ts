@@ -1,108 +1,36 @@
-// Number Types mini-challenge 10 10.2
-// Write a function that will only accept numbers and attend to
-// all TypeScript weakness flags.
-// : number
+const reviewTotalDisplay = document.querySelector('#reviews')
+const returningUserDisplay = document.querySelector('#returning-user')
+const userNameDisplay = document.querySelector('#user')
+import { LoyaltyUser, Permissions } from './enums'
+import  Review  from './interfaces'
 
+export function showReviewTotal(value: number, reviewer: string, isLoyalty: LoyaltyUser) {
+    const iconDisplay = LoyaltyUser.GOLD_USER ? '⭐' : ''
+    reviewTotalDisplay.innerHTML = value.toString() + ' review' + makeMultiple(value) + ' | last reviewed by ' + reviewer + ' ' + iconDisplay    
+}
 
-
-import { showReviewTotal, populateUser } from "./utils";
-
-const reviews : {
-    name: string;
-    stars: number;
-    loyaltyUser: boolean;
-    date: string;
-}[] = [
-  {
-    name: "Sheia",
-    stars: 5,
-    loyaltyUser: true,
-    date: "01-04-2021",
-  },
-  {
-    name: "Andrzej",
-    stars: 3,
-    loyaltyUser: false,
-    date: "28-03-2021",
-  },
-  {
-    name: "Omar",
-    stars: 4,
-    loyaltyUser: true,
-    date: "27-03-2021",
-  },
-];
-
-
-const you: {
-    firstName: string;
-    lastName: string;
-    isReturning: boolean;
-    age: number;
-    stayedAt: string[]
-} = {
-    firstName: 'Koketso',
-    lastName: 'Brown',
-    isReturning: true,
-    age: 35,
-    stayedAt: ['florida-home', 'oman-flat', 'tokyo-bungalow']
-};
-
-//properties
-const properties : {
-    image: string;
-    title: string;
-    price: number;
-    location: {
-        firstLine: string;
-        city: string;
-        code: number;
-        country: string;
-    };
-    contact: string;
-    isAvailable: boolean
-}[] = [
-    {
-        image: './images/colombia-property.jpg',
-        title: 'Colombian Shack',
-        price: 45,
-        location: {
-            firstLine: 'flat-37',
-            city: "Bogota",
-            code: 45632,
-            country: 'Colombia'
-        },
-        contact: 'marywinkle@gmail.com',
-        isAvailable: true
-    },
-    {
-        image: './images/poland-property.jpg',
-        title: 'Polish Cottage',
-        price: 34,
-        location: {
-            firstLine: 'no 23',
-            city: "Gdansk",
-            code: 347362,
-            country: 'Poland'
-        },
-        contact: 'garydavis@gmail.com',
-        isAvailable: false
-    },
-    {
-        image: './images/london-property.jpg',
-        title: 'London Flat',
-        price: 23,
-        location: {
-            firstLine: 'flat 15',
-            city: "London",
-            code: 879416,
-            country: 'United Kingdom'
-        },
-        contact: 'andyluger@gmail.com',
-        isAvailable: true 
+export function populateUser(isReturning : boolean, userName: string ) {
+    if (isReturning){
+        returningUserDisplay.innerHTML = 'back'
     }
-]
+    userNameDisplay.innerHTML = userName
+}
 
-showReviewTotal(reviews.length, reviews[0].name, reviews[0].loyaltyUser)
+export function showDetails(value: boolean | Permissions, element : HTMLDivElement, price: number) {
+    if (value) {
+        const priceDisplay = document.createElement('div')
+        priceDisplay.innerHTML = price.toString() + '/night'
+        element.appendChild(priceDisplay)
+    }
+}
 
-populateUser(you.isReturning, you.firstName);
+export function makeMultiple(value: number) : string {
+    if (value > 1 || value == 0) {
+        return 's'
+    } else return ''
+}
+
+export function getTopTwoReviews(reviews : Review[]) : Review[]  {
+ const sortedReviews = reviews.sort((a, b) => b.stars - a.stars)
+ return sortedReviews.slice(0,2)
+}
