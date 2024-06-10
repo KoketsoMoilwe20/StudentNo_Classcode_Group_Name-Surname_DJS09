@@ -3,12 +3,11 @@
 // all TypeScript weakness flags.
 // : number
 
-const returningUserDisplay = document.querySelector('#returning-user')
-const userNameDisplay = document.querySelector('#user')
+const returningUserDisplay = document.querySelector("#returning-user");
+const userNameDisplay = document.querySelector("#user");
 const reviewTotalDisplay = document.querySelector("#reviews");
 
-let isOpen : boolean
-
+let isOpen: boolean;
 
 const reviews = [
   {
@@ -31,25 +30,38 @@ const reviews = [
   },
 ];
 
-function showReviewTotal(value: number, reviewer: string, isLoyalty : boolean) {
-    const iconDisplay = isLoyalty ? '⭐' : ''
+function showReviewTotal(value: number, reviewer: string, isLoyalty: boolean) {
+  const iconDisplay = isLoyalty ? "⭐" : "";
   reviewTotalDisplay.innerHTML =
-    "review total " + value.toString() + "| last reviewed by " + reviewer + ' ' + iconDisplay ;
+    "review total " +
+    value.toString() +
+    "| last reviewed by " +
+    reviewer +
+    " " +
+    iconDisplay;
 }
 
 showReviewTotal(reviews.length, reviews[0].name, reviews[0].loyaltyUser);
 
-
-const you = {
-    userName: 'Bobby',
+const you: {
+    firstName: string;
+    lastName: string;
+    isReturning: boolean;
+    age: number;
+} = {
+    firstName: 'Bobby',
+    lastName: 'Brown',
     isReturning: true,
+    age: 35,
+};
+
+
+
+function populateUser(isReturning: boolean, userName: string) {
+  if (isReturning) {
+    returningUserDisplay.innerHTML = "back";
+  }
+  userNameDisplay.innerHTML = userName;
 }
 
-function populateUser(isReturning : boolean, userName : string) {
-    if (isReturning) {
-        returningUserDisplay.innerHTML = 'back'
-    }
-    userNameDisplay.innerHTML = userName
-}
-
-populateUser(you.isReturning, you.userName)
+populateUser(you.isReturning, you.userName);
